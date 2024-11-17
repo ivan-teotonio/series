@@ -2,7 +2,9 @@
 <form action="{{ $action }}" method="post">
     @csrf
 
-    @method(isset($name) ? 'PUT' : 'POST')
+    @if ($update)
+        @method('PUT')
+    @endif
 
     <div class="mb-3">
         <label for="name" class="form-label">Nome:</label>

@@ -1,18 +1,43 @@
 <x-layout title="Nova Series">
 
-    <x-series.form :action="route('series.store')" />
+    
+<form action="{{ route('series.store') }}" method="post">
+    @csrf
 
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="name" class="form-label">Nome:</label>
+            <input type="text"
+                autofocus
+                id="name"
+                name="name"
+                class="form-control"
+                value="{{ old('name') }}">
+        </div>
+
+        <div class="col-md-2">
+            <label for="seasonsQtd" class="form-label">Nª Temporadas:</label>
+            <input type="text"
+                id="seasonsQtd"
+                name="seasonsQtd"
+                class="form-control"
+                value="{{ old('seasonsQtd') }}">
+        </div>
+
+        <div class="col-md-2">
+            <label for="episodesPerSeason" class="form-label">Eps / Temporada:</label>
+            <input type="text"
+                id="episodesPerSeason"
+                name="episodesPerSeason"
+                class="form-control"
+                value="{{ old('episodesPerSeason') }}">
+        </div>
+
+   </div>
+    <button type="submit" class="btn btn-primary">{{ isset($name) ? 'Editar' : 'Adicionar' }}</button>
+</form>
    
 
-        <!-- <form action="{{ route('series.store') }}" method="post" class="ms-2">
-            @csrf
-            <div class="form-group mb-3">
-                <label for="name" class="form-label">Nome</label>
-                <input type="text" name="name" id="name" class="form-control">
-            </div>
-
-            <button class="btn btn-primary">Adicionar</button>
-        </form>
-    </span> -->
+       
    
 </x-layout>

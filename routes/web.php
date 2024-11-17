@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SeriesController;
-
+use App\Http\Controllers\SeasonController;
 Route::get('/', function () {
     return redirect()->route('series.index');
 });
 
 Route::resource('/series', SeriesController::class)->except(['show']);
+
+Route::get('/series/{series}/seasons', [SeasonController::class, 'index'])->name('seasons.index');
 
 // Route::delete('series/{serie}', [SeriesController::class, 'destroy'])->name('series.destroy');
 
