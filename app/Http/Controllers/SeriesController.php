@@ -8,9 +8,13 @@ use App\Models\Series;
 use App\Models\Season;
 use App\Models\Episode;
 use App\Http\Requests\SeriesFormRequest;
+use App\Repositories\SeriesRepository;
 class SeriesController extends Controller
-
 {
+    public function __construct(private SeriesRepository $repository)
+    {
+        
+    }
     public function index(Request $request)
     {
         
@@ -28,27 +32,7 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-
-       $serie = Series::create($request->all());
-       $seasons = [];
-       for($i = 1; $i <= $request->seasonsQtd; $i++){
-          $seasons[] = [
-            'series_id' => $serie->id,
-            'number' => $i,
-          ];
-        }
-        Season::insert($seasons);
-
-        $episodes = [];
-        foreach($serie->seasons as $season){
-          for($j = 1; $j <= $request->episodesPerSeason; $j++){
-            $episodes[] = [
-                'season_id' => $season->id,
-                'number' => $j,
-            ];
-          }
-        }
-        Episode::insert($episodes);
+       $serie = $this->repository->add($request);
        return redirect()->route('series.index')->with('sucesso',"Serie '{$serie->name}' criada com sucesso");
 
     }
